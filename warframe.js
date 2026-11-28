@@ -662,7 +662,7 @@
     processPage();
 
     console.log(
-        '✅ Warframe Market 快捷复制已加载'
+        '✅ Warframe Market 快捷复制 v1.0.0 已加载'
     );
 
 })();

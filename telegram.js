@@ -1,9 +1,8 @@
-
 // ==UserScript==
 // @name         Telegram Web K 增强
 // @namespace    https://web.telegram.org/k/
 // @version      2.9.9
-// @description  文件夹优化、消息广告过滤、官方赞助广告隐藏、视频网页全屏及方向键控制
+// @description  隐藏「所有」文件夹、过滤关键词消息、隐藏官方广告、添加视频网页全屏按钮、左右方向键快退/快进
 // @author       YJCF
 // @license      MIT
 // @match        https://web.telegram.org/k/*
