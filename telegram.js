@@ -1,8 +1,8 @@
 // ==UserScript==
 // @name         Telegram Web K 增强
 // @namespace    https://web.telegram.org/k/
-// @version      2.9.9
-// @description  隐藏「所有」文件夹、过滤关键词消息(需在 keywords 自行补充)、隐藏官方广告、添加视频网页全屏按钮(视频右下角)、左右方向键快退/快进
+// @version      3.0.0
+// @description  隐藏「所有」文件夹、过滤关键词消息、隐藏官方赞助广告、添加视频网页全屏按钮、左右方向键快退/快进
 // @author       YJCF
 // @license      MIT
 // @match        https://web.telegram.org/k/*
@@ -13,22 +13,32 @@
 (() => {
     'use strict';
 
-    const CONFIG = {
-        hideAllTab: true,
-        autoSelectFirstFolder: true,
-        filterMessages: true,
-        hideMatched: true,
-        hideSponsoredAds: true,
-        videoFullscreen: true,
+    // =========================================================
+    // 配置
+    // =========================================================
 
+    const CONFIG = {
+        // 隐藏默认的「所有」文件夹标签
+        hideAllTab: true,
+        // 自动切换到第一个自定义文件夹
+        autoSelectFirstFolder: true,
+        // 启用关键词过滤，匹配后隐藏整条消息
+        filterMessages: true,
+        // 隐藏 Telegram 官方赞助广告
+        hideSponsoredAds: true,
+        // 启用视频网页全屏功能
+        videoFullscreen: true,
         // 视频方向键快进/快退秒数
         videoSeekSeconds: 5,
-        
-        // 关键词消息过滤
+        // 消息关键词过滤列表
         keywords: [
             '博彩', '刷单', '兼职日结', '彩票', '极搜', '六合彩', '返水'
         ]
     };
+
+    // =========================================================
+    // 全局变量
+    // =========================================================
 
     const MESSAGE_SELECTOR =
         '.bubble[role="article"][data-mid]';
@@ -37,6 +47,10 @@
 
     let activeFullscreenViewer = null;
     let scheduled = false;
+
+    // =========================================================
+    // 关键词正则表达式
+    // =========================================================
 
     const keywordPattern = CONFIG.keywords.length
         ? new RegExp(
@@ -298,11 +312,12 @@
 
             processedMessages.set(message, text);
 
+            // 匹配关键词后直接隐藏整条消息
             const matched = keywordPattern.test(text);
 
             message.classList.toggle(
                 'tm-ad-hidden',
-                CONFIG.hideMatched && matched
+                matched
             );
         });
     }
